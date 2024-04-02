@@ -439,8 +439,238 @@ if __name__ == "__main__":
 ```
 
 
+# Appendix A: The System Information JSON Introduction
+In the Structure section below you will find an illustration of the structure of the JSON document retrieved by calling the /getsysteminfo endpoint.  In terms of the JSON string, each item in the illustration represents the name of a node, items in italics represent nodes that have children (that is, nodes that consist of child nodes), and items in normal text represent nodes without children (that is, nodes that consist of only data).  Child nodes are found underneath their parents at a greater indentation level (in other words, below and to the right of their parents).  
+
+## Structure
+BpWinVersion
+OperatorMode
+Programmer
+   Communication
+      PortMode
+   Model
+   SiteInfo
+      MasterSite
+      SocketModuleInfo
+         Name
+         SocketsPerSite
+         DaughterCardName
+      Site*
+         Ordinal
+         SerialNumber
+         SocketModule
+            Odometer
+            TripOdometer
+            Socket*
+               Ordinal
+               Odometer
+               TripOdometer
+
+* = Nodes that may appear 0 or more times in their location in the hierarchy.
+
+## Reference
+### //BpWinVersion
+
+The version number of the BPWin application currently running the API.
+
+**Example Data**
+
+4.64.0
+
+### //OperatorMode
+
+Whether BPWin is currently running in operator mode. One of two possible strings: “Yes” or “No”.
+
+**Example Data**
+
+Yes
+
+### //Programmer//Communication
+
+A parent node consisting of child nodes that represent the currently detected PC to programmer communication configuration.
+
+### //Programmer//Communication//PortMode
+
+The current site communication protocol.
+
+**Example Data**
+
+(EPP)
+
+### //Programmer
+
+Consists of child nodes that contain information about the currently-detected programmer.  This node will be present only if the software is not currently in Demo mode.
+
+### //Programmer//Model
+
+The currently-detected programmer model.
+
+**Example Data**
+
+BP-2700
+
+### //Programmer//SiteInfo
+
+Consists of child nodes that contain information about the site hardware in the programmer.
+
+### //Programmer//SiteInfo//MasterSite
+
+An integer that designates which site on the programmer is currently configured as the “Master Site”.  This value adheres to the numbering scheme described in the Site and Socket Identification section.
+
+**Example Data**
+
+0
+
+### //Programmer//SiteInfo//SocketModuleInfo
+
+Consists of child nodes that contain general information about the currently-installed socket modules in the programmer.  
+Because there can be only one type of socket module installed in the programmer at any given time, information exists that can be applied to all socket modules in a programmer at any given time.  This general socket module information is presented in this node.  For information that is specific to each socket module currently installed on the system, see //Programmer//SiteInfo//Site[x]//SocketModule.
+
+### //Programmer//SiteInfo//SocketModuleInfo//Name
+
+The name of the socket module currently installed in the programmer.
+
+**Example Data**
+
+FX4ASM48TD
+
+### //Programmer//SiteInfo//SocketModuleInfo//SocketsPerSite
+
+An integer that represents the number of sockets in each site.
+
+**Example Data**
+
+4
+
+### //Programmer//SiteInfo//SocketModuleInfo//DaughterCardName
+
+The name of the daughter card currently in the socket module.  This item will be present only if there is a daughter card in the socket module.
+
+**Example Data**
+
+WX4ASM48TD
+
+### //Programmer//SiteInfo//Site[x]
+
+Consists of child nodes that contain information about a site in the programmer.  Since programmers contain one or more sites, this node can be present one-or-more times.  Each occurance of this node represents a unique site in the programmer.
+The x in the XPath string represents which node of these possibly-multiple nodes.
+
+### //Programmer//SiteInfo//Site[x]//Ordinal
+
+An integer in decimal format that designates which site on the programmer the //Programmer//SiteInfo//Site[x] node represents.  This value adheres to the numbering scheme described in the Site and Socket Identification section.
+
+**Example Data**
+
+1
+
+### //Programmer//SiteInfo//Site[x]//SerialNumber
+
+The site’s serial number as it would appear when running diagnostics in the BPWin application.
+
+**Example Data**
+
+34353
+
+### //Programmer//SiteInfo//Site[x]//SocketModule
+
+Consists of child nodes that contain information about the socket module installed in the site.  This node will not be present if a socket module is not installed in the site.
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//Odometer
+
+An integer in decimal format representing the current value of the socket module’s insertion counter as it would appear when selecting “Tools/Socket Module Counter…” from the BPWin menu.
+
+**Example Data**
+
+26359
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//TripOdometer
+
+An integer in decimal format representing the current value of the socket module’s “Number of Insertions Since Last Reset” as it would appear when selecting “Tools/Socket Module Counter…” from the BPWin menu.
+
+**Example Data**
+
+26346
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//Socket[y]
+
+Consists of child nodes that contain information about a socket in the socket module.  Since socket modules can contain one or more sockets, this node can be present one-or-more times.  Each occurance of this node represents a unique socket in the socket module.
+The y in the XPath string represents which node of these possibly-multiple nodes.
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//Socket[y]//Ordinal
+
+An integer in decimal format that designates which socket in the socket module the //Programmer//SiteInfo//Site[x]//SocketModule//Socket[y] node represents.  This value adheres to the numbering scheme described in the Site and Socket Identification section.
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//Socket[y]//Odometer
+
+An integer in decimal format representing the current value of the socket’s insertion counter as it would appear when selecting “Tools/Socket Module Counter…” from the BPWin menu.
+
+**Example Data**
+
+198211
+
+### //Programmer//SiteInfo//Site[x]//SocketModule//Socket[y]//TripOdometer
+
+An integer in decimal format representing the current value of the socket’s “Number Of Insertions Since Last Reset” as it would appear when selecting “Tools/Socket Module Counter…” from the BPWin menu.
+
+**Example Data**
+
+80381
 
 
+# Appendix B: ResultCode List
+The following table shows a list of explanations regarding the FailCode in BPWin. 
+Right now this applies to the "FailCode" parameter in the JSON object returned by BPWin. 
+
+| FailCode | Description |
+|----------|----------|
+| -1 | Internal BPWin error (firewalled unhandled exception).  Send contents of blackbox.log to BP Microsystems technical support. |
+| 1 | Undefined |
+| 2 | Unknown result code. |
+| 3 | Cannot reset hardware. |
+| 4 | Excessive current detected. The protection circuit has shut off the power. |
+| 5 | Hardware timeout. |
+| 8 | This function requires a programmer to be attached therefore the DEMO does not support it. |
+| 9 | Programmer execution error. | 
+| 10 | Error in programming algorithm. Please call technical support. |
+| 14 | There is no chip in the socket. |
+| 15 | The chip is not inserted in the socket correctly. |
+| 16 | The chip is inserted backwards. | 
+| 20 | Command failed. |
+| 21 | Cannot program. |
+| 22 | Cannot erase. |
+| 23 | Invalid electronic signature in chip (device ID). |
+| 24 | Invalid electronic signature in chip (algorithm ID). |
+| 25 | Invalid electronic signature in chip (manufacturer ID). |
+| 26 | Device is not blank. |
+| 27 | Device is not secured. |
+| 28 | Data in chip does not match buffer. | 
+| 30 | Command aborted. |
+| 36 | You must properly install the correct socket module or daughter-card. | 
+| 37   | Illegal bit detected. |
+| 38   | Functional test failed. |
+| 39   | Device already secured. |
+| 44   | Internal error. Please call technical support. |
+| 45   | Hardware requires calibration. Please call technical support. |
+| 48   | Cannot Unprotect. |
+| 49   | Cannot Protect. |
+| 50   | Device's sum does not match sum specified in AFS/Options. |
+| 54   | Device is not blank. (Interchangeable with failure code 26) |
+| 55   | Invalid single byte identifier in chip. |
+| 56   | Some device pins are shorted together. |
+| 58   | The device outputs were not tristated. |
+| 59   | Excessive leakage current detected. |
+| 80   | Excessive current detected. The protection circuit has shut off the power. (Interchangeable with failure code 4). |
+| 92   | There is no status available for the specified site. |
+| 134  | Device is not encrypted. |
+| 135  | Failed to send entire data pattern to device. |
+| 137  | This device does not support empty socket test. |
+| 145  | Devices should not be present in the slave sockets. |
+| 146  | Cannot read device. |
+| 149  | A device was detected in a socket. |
+| 150  | Could not load BP file. |
+| 151  | Software feature not licensed on all sites. |
+| 152  | Software feature not licensed on some sites, registration expired on other sites. |
+| 154  | The quantity number should be between 1 and 65535. |
 
 
 
