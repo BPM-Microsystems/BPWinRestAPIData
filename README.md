@@ -95,3 +95,353 @@ It will show the error message when failed
 
 - BPWin will verify the challenge number and password. If the verification succeeds, BPWin will send the requested data back to your client application, and the API call is completed. If the verification fails, BPWin will return an HTTP 403 error.
 - Ensure that you maintain the security of your API passphrases to keep your APS machine interactions secure and reliable.
+
+
+# API Endpoints
+### GET: /health
+*Manual* *Autohandler*
+
+Getting whether there is connection to the REST API system of the BPWin. Calling this method checks if the connection to the REST API of BPWin is established. If the call does not return an HTTP code of 200(OK), it means some of the following conditions may not be met. 
+BPWin is open. 
+BPWin supports REST API functionality. 
+The IP address of the PC running BPWin is correct and accessible. 
+
+Result
+```
+{
+    "Success": 1,
+    "Message": "BPWin is ready."
+}
+```
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/health")
+```
+
+### GET: /version
+*Manual* *Autohandler*
+
+Getting the version of the REST API system, including API version and BPWin version. For the scope of this documentation, the API version is 1.0.
+
+Result
+```
+{
+    "API_Version": "1.0",
+    "BPWin_Version": "V7.0.9 DeviceSupportUpdate.99 (12/21/2022)"
+}
+```
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/version")
+```
+
+## Job Summary Data
+The Data Section consists of REST API endpoints that get data from BPWin through GET requests. The endpoints starting with /data/ can be called right after BPWin initialization, as long as there is data available. The endpoints starting with /data/job/ can only be called during a job session. 
+
+### GET: /data/machine-name
+*Manual* *Autohandler*
+
+Get the information of the machine currently identified by BPWin. For an APS machine, the result will include its Type, Description and Serial Number. For a manual site, it will only indicate it’s manual. API functionalities are currently not eligible for manual mode. 
+
+Result(JSON format)
+When BPWin is connected with an APS. 
+```
+{
+    "Type": "APS",
+    "Description": "4000 APS",
+    "Serial_Number": "H4911810120010"
+}
+```
+When only manual sites are attached.
+```
+{
+    "Type": "Manual",
+    "Description": null,
+    "Serial_Number": null
+}
+```
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/data/machine-name")
+```
+
+### GET: /data/job-name
+*Manual* *Autohandler*
+
+Get the file names associated with this job, including BP, ABP and Data Pattern. For BP and ABP files, there will also be the paths on the PC. 
+
+Result(JSON format)
+When the corresponding files are not loaded, the path will indicate "No File Loaded". 
+```
+{
+    "DataPattern_FileName": "No Data Pattern File Loaded",
+    "BP_FileName": "No Job File Loaded",
+    "ABP_FileName": "No APS Workflow File Loaded"
+}
+```
+When there are corresponding files loaded, the paths of files will be displayed. 
+```
+{
+    "DataPattern_FileName": "APITestDataPattern.bin",
+    "BP_FileName": "C:\\APITestFile\\APITestBp.bp",
+    "ABP_FileName": "C:\\APITestFile\\APITestAbp.abp"
+}
+```
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/data/job-name")
+```
+
+### GET: /data/selected-device
+*Manual* *Autohandler*
+
+Get the name of the device currently selected in the BPWin instance. 
+
+Result(JSON format)
+When there is a job loaded or device selected, there will be a full name same as shown in the BPWin device selector. There are also separated Device and Manufacturer names. 
+```
+{
+    "FullName": "Winbond W25N01GVZEIG",
+    "Device": "W25N01GVZEIG",
+    "Manufacturer": "Winbond"
+}
+```
+When there is no device selected, the FullName field will show “No Device Selected”. The other fields will be empty. 
+```
+{
+    "FullName": "No Device Selected",
+    "Device": "",
+    "Manufacturer": ""
+}
+```
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/data/selected-device")
+```
+
+### GET: /data/job-stats
+*Manual* *Autohandler*
+
+Get the statistics of the job session. This data is the same as the job statistics parameters displayed on the BPWin sidebar while a job session is in progress. 
+Machine Status: All status available are “Active”, “Idle”, “Paused” and “Error”. 
+Light tower status: This includes Red, Amber and Green lights. The data is the same as shown on the physical light tower of the APS machine connected. 
+
+Result(JSON format)
+When no job session is in progress, the following message will return. 
+```
+{
+    "Success": 0,
+    "Message": "Job statistics are only available when job session is in progress. "
+}
+```
+When BPWin is in manual mode, the format will be as follows.
+```
+{
+    "Job_Yield": 0,
+    "Elapsed_Time": "00:00:02",
+    "Passed_Device": 3,
+    "Failed_Device": 0,
+    "Active_Device": 0,
+    "Remaining_Device": 17
+}
+```
+
+When BPWin is in autohandler mode, the format will be as follows. 
+```
+{
+    "Machine_Status": "Active",
+    "Red_Light_On": "false",
+    "Amber_Light_On": "false",
+    "Green_Light_On": "true",
+    "Job_Yield": 0,
+    "Elapsed_Time": "00:00:01",
+    "Remaining_Time": "--:--:--",
+    "Idle_Time": "00:00:00",
+    "Actual_DPH": 0,
+    "Potential_DPH": 0,
+    "Passed_Device": 1,
+    "Failed_Device": 0,
+    "Active_Device": 0,
+    "Remaining_Device": 19
+}
+```
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/data/job-stats")
+```
+
+### GET: /data/system-info
+*Manual* *Autohandler*
+
+Returns a JSON string that describes the system’s current hardware and software configuration. The “system” for which this method returns information about includes the BPWin application, the currently-connected programmer, and the currently-connected Automated Programming System (APS).
+See Appendix A for more information.
+
+Example in Python
+```python
+import requests
+requests.get("http://[IP Address and Port]/data/system-info")
+```
+
+# Websocket Endpoint - Real-time status
+/ws
+*Manual* *Autohandler*
+This endpoint utilizes Websocket technology. It keeps the connection between the client and BPWin and pushes BPWin real-time status to the client. 
+Events in BPWin monitored by this endpoint are listed as follows. 
+
+## Monitored Events and Results(JSON format)
+### Data Pattern Status
+Applicable to Data Pattern Load operation only. There are only 2 kinds of "Status" at the moment: "Complete" and "Fail". "Progress" shows the percentage of progress. Right now only "0" corresponding to "Fail" and "100" corresponding to "Complete" will show up. 
+```
+{
+    "Category" : "Event",
+    "Note" : "DataPattern",
+    "Operation": "Load",
+    "Progress": "100",
+    "Status": "Complete",
+    "Timestamp": "2023-01-25 13:13:43 -0600"
+}
+```
+
+### Job File Status
+Applicable to Load and Save operations of BP and ABP files. The possible "Status" are "Complete" and "Fail". 
+```
+{
+    "Category" : "Event",
+    "Note" : "JobFile" ,
+    "Directory": "C:\APITestFile\APITestAbp.abp",
+    "Operation": "Load",
+    "Status": "Complete",
+    "Timestamp": "2023-01-25 13:15:46 -0600"
+}
+```
+
+### Job Session Status
+The following result indicates a job session begins. 
+```
+{
+    "Category" : "Event",
+    "Note" : "Job" ,
+    "Status" : "Begin" ,
+    "Timestamp" : "2023-01-26 09:48:10 -0600" 
+}
+```
+
+A Successful completion of the job session will show Code 0.
+```
+{
+    "Category" : "Event",
+    "Note" : "Job" ,
+    "Code" : "0" ,
+    "Status" : "Complete" ,
+    "Timestamp" : "2023-01-26 09:52:02 -0600" 
+}
+```
+
+Soft Abort shows Code 1000. 
+```
+{
+    "Category" : "Event",
+    "Note" : "Job" ,
+    "Code" : "1000" ,
+    "Status" : "Complete" ,
+    "Timestamp" : "2023-01-26 09:50:03 -0600" 
+}
+```
+
+Hard Abort shows Code 1001.
+```
+{
+    "Category" : "Event",
+    "Note" : "Job" ,
+    "Code" : "1001" ,
+    "Status" : "Complete" ,
+    "Timestamp" : "2023-01-26 09:55:33 -0600" 
+}
+```
+
+### Socket Status
+Whenever there is a change to the Socket Status, there will be a notification. There are 3 categories of socket status during job sessions that will show up in the notification: "Active", "Pass" and "Fail". 
+Note that the Site and Socket numbers are 1-based. Socket 1 corresponds to Socket A in BPWin. 
+
+The following result shows up for a "Socket Active" notification.
+```
+{
+    "APS Serial Number": "H3911910180556",
+    "Category": "Event",
+    "DP Checksum": "F402D078h",
+    "Note": "SocketStatus",
+    "Site_SN": "43196",
+    "Site_Socket": "3A",
+    "Socket_PartNumber": "FVE4ASM08MLPA",
+    "Socket_SN": "A002CAB5",
+    "Status": "Active",
+    "Timestamp": "2023-12-08 17:08:16 -0600"
+}
+```
+
+The following result will show up for "Socket Pass" or "Socket Fail", with an extra field called "ResultCode". ResultCode 0 means Pass. A complete list of possible ResultCode can be found in Appendix B. 
+```
+{
+    "APS Serial Number": "H3911910180556",
+    "Category": "Event",
+    "DP Checksum": "F402D078h",
+    "Note": "SocketStatus",
+    "ResultCode": "0",
+    "Site_SN": "43196",
+    "Site_Socket": "3A",
+    "Socket_PartNumber": "FVE4ASM08MLPA",
+    "Socket_SN": "A002CAB5",
+    "Status": "Pass",
+    "Timestamp": "2023-12-08 17:09:12 -0600"
+}
+```
+
+Example in Python
+The following code sample calls the websocket endpoint on BPWin and keeps the connection. While the connection is alive, whenever BPWin pushes a notification, the python script will print it out. 
+
+```python
+import asyncio
+import websockets
+import threading
+
+async def websocket_handler():
+    websocket_url = 'ws://[IP Address and Port]/ws'
+
+    async with websockets.connect(websocket_url) as websocket:
+        while True:
+            message = await websocket.recv()
+            print('Received:', message)
+            
+def run_websocket_handler():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(websocket_handler())
+    loop.close()
+            
+if __name__ == "__main__":
+    websocket_thread = threading.Thread(target=run_websocket_handler)
+    websocket_thread.start()
+
+    # Keep the main thread running to allow WebSocket thread to continue
+    while True:
+        pass
+```
+
+
+
+
+
+
+
+
