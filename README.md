@@ -20,7 +20,6 @@ https://www.python.org/downloads/release/python-3119/
 Install Pipenv if not already done.
 ```sh
 pip install pipenv
-pipenv shell
 ```
 Clone and Go to the project folder:
 ```sh
@@ -32,6 +31,10 @@ Install below dependencies using pipenv:
 pipenv install
 ```
 
+Open Virtual Enviornment:
+```sh
+pipenv shell
+```
 Run the web application
 ```sh
 streamlit run ./Devkit.py
