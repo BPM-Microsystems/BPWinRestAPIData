@@ -13,32 +13,37 @@
 | 4/1/2024 | Rectified Quick Starter section and started Github repo. |
 
 ## Quick Starter with DataPanel.py
-Install python 3.11
 
-https://www.python.org/downloads/release/python-3119/
+### Setup Instructions
+1. Install python 3.11
 
-Install Pipenv if not already done.
-```sh
-pip install pipenv
-```
-Clone and Go to the project folder:
-```sh
-git clone https://github.com/rishavbpm/BPWinRestAPIData.git
-cd to_the_path_of BPWinRestAPIData
-```
-Install below dependencies using pipenv:
-```sh
-pipenv install
-```
+    https://www.python.org/downloads/release/python-3119/
 
-Open Virtual Enviornment:
-```sh
-pipenv shell
-```
-Run the web application
-```sh
-streamlit run ./Devkit.py
-```
+2. Install Pipenv if not already done.
+    ```sh
+    pip install pipenv
+    ```
+3. Clone and Go to the project folder:
+    ```sh
+    git clone https://github.com/rishavbpm/BPWinRestAPIData.git
+    cd to_the_path_of BPWinRestAPIData
+    ```
+4. Install below dependencies using pipenv:
+    ```sh
+    pipenv install
+    ```
+
+5. Start Virtual Enviornment:
+    ```sh
+    pipenv shell
+    ```
+6. Make sure to have empty Auth.txt in "C:\BP" folder
+
+7. Run the web application
+    ```sh
+    streamlit run ./Devkit.py
+    ```
+
 ### Python requirements
 In order to utilize this starter program, some conditions need to be satisfied:
 - Python version 3.8 or higher is installed on the computer
