@@ -13,6 +13,25 @@
 | 4/1/2024 | Rectified Quick Starter section and started Github repo. |
 
 ## Quick Starter with DataPanel.py
+
+Install Pipenv if not already done.
+```sh
+pip install pipenv
+pipenv shell
+```
+Go to the project folder:
+```sh
+cd to_the_path_of BPWinRestAPIData
+```
+Install below dependencies using pipenv:
+```sh
+pipenv install
+```
+
+Run the web application
+```sh
+streamlit run ./Devkit.py
+```
 ### Python requirements
 In order to utilize this starter program, some conditions need to be satisfied:
 - Python version 3.8 or higher is installed on the computer
