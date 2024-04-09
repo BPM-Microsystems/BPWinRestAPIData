@@ -19,7 +19,7 @@
 
     https://www.python.org/downloads/release/python-3119/
 
-2. Install Pipenv if not already done.
+2. Open CMD and Install Pipenv if not already done.
     ```sh
     pip install pipenv
     ```
