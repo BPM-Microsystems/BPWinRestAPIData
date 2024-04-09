@@ -19,8 +19,9 @@ Install Pipenv if not already done.
 pip install pipenv
 pipenv shell
 ```
-Go to the project folder:
+Clone and Go to the project folder:
 ```sh
+git clone https://github.com/rishavbpm/BPWinRestAPIData.git
 cd to_the_path_of BPWinRestAPIData
 ```
 Install below dependencies using pipenv:
