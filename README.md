@@ -13,6 +13,9 @@
 | 4/1/2024 | Rectified Quick Starter section and started Github repo. |
 
 ## Quick Starter with DataPanel.py
+Install python 3.11
+
+https://www.python.org/downloads/release/python-3119/
 
 Install Pipenv if not already done.
 ```sh
