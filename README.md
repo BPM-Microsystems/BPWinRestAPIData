@@ -15,8 +15,7 @@
 ## Quick Starter with DataPanel.py
 
 ### Setup Instructions
-1. Install python 3.11, make sure select 'add to path' during installation.
-
+1. Install python 3.11, make sure to select 'add to path' and 'pip' during installation.
     https://www.python.org/downloads/release/python-3119/
 
         (Optional) If path of python was not added during installation, you can add it by:
@@ -29,7 +28,9 @@
     ```sh
     pip install pipenv
     ```
-3. Clone and go to the cloned project folder. Replace below 'to/the/path/of' with the location where the project was cloned:
+3. Git Clone the project and go to the cloned project folder. Replace below 'to/the/path/of' with the location where the project was cloned:
+    Install git if not already done, https://git-scm.com/downloads
+    
     ```sh
     git clone https://github.com/rishavbpm/BPWinRestAPIData.git
     cd to/the/path/of/BPWinRestAPIData
