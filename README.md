@@ -16,13 +16,15 @@
 
 ### Setup Instructions
 1. Install python 3.11, make sure to select 'add to path' and 'pip' during installation.
+    
     https://www.python.org/downloads/release/python-3119/
 
         (Optional) If path of python was not added during installation, you can add it by:
         1. Search 'Environment Variables'
         2. Click on 'Environment Variables' under Advanced tab
         3. Select 'Path' on System Variable and click on Edit
-        4. Click New and enter the scripts folder of installed python. Depending on installation, it may look like: 'C:\Users\UserName\AppData\Roaming\Python\Scripts'
+        4. Click New and enter the scripts folder of installed python. Depending on installation.
+        It may look like: 'C:\Users\UserName\AppData\Roaming\Python\Scripts'
 
 2. Open CMD and Install Pipenv if not already done.
     ```sh
@@ -30,7 +32,7 @@
     ```
 3. Git Clone the project and go to the cloned project folder. Replace below 'to/the/path/of' with the location where the project was cloned:
     Install git if not already done, https://git-scm.com/downloads
-    
+
     ```sh
     git clone https://github.com/rishavbpm/BPWinRestAPIData.git
     cd to/the/path/of/BPWinRestAPIData
@@ -39,7 +41,10 @@
     ```sh
     pipenv install
     ```
-        (Optional) If you find error about python not found, add python path to pipenv by replacing 'to/the/path/of/installed/' with the location where python was installed (example: C:\Users\UserName\AppData\Local\Programs\Python\Python311\python.exe):
+        (Optional) If you find error about python not found.
+        Add python path to pipenv.
+        Replace 'to/the/path/of/installed/' with the location where python was installed 
+        (example: C:\Users\UserName\AppData\Local\Programs\Python\Python311\python.exe)
 
         ```sh
         pipenv --python to/the/path/of/installed/python.exe
