@@ -11,6 +11,7 @@
 | 12/12/2023 | Updated endpoint "/health", "/data/selected-device" <br/> Updated field names in /ws - Socket Status <br/> Updated endpoint /data/job-stats <br/> Specified which endpoints can be used in manual or autohandler mode <br/> Updated Authentication section with code sample <br/> Change document revision to v1.2 | 
 | 1/4/2024 | Updated Devkit Program code. |
 | 4/1/2024 | Rectified Quick Starter section and started Github repo. |
+| 4/9/2024 | Added Virtual Enviornment based Quick Starter Guide. |
 
 ## Quick Starter with DataPanel.py
 
