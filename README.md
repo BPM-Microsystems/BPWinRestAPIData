@@ -15,35 +15,46 @@
 ## Quick Starter with DataPanel.py
 
 ### Setup Instructions
-1. Install python 3.11
+1. Install python 3.11, make sure select 'add to path' during installation.
 
     https://www.python.org/downloads/release/python-3119/
+
+        (Optional) If path of python was not added during installation, you can add it by:
+        1. Search 'Environment Variables'
+        2. Click on 'Environment Variables' under Advanced tab
+        3. Select 'Path' on System Variable and click on Edit
+        4. Click New and enter the scripts folder of installed python. Depending on installation, it may look like: 'C:\Users\UserName\AppData\Roaming\Python\Scripts'
 
 2. Open CMD and Install Pipenv if not already done.
     ```sh
     pip install pipenv
     ```
-3. Clone and Go to the project folder:
+3. Clone and go to the cloned project folder. Replace below 'to/the/path/of' with the location where the project was cloned:
     ```sh
     git clone https://github.com/rishavbpm/BPWinRestAPIData.git
-    cd to_the_path_of BPWinRestAPIData
+    cd to/the/path/of/BPWinRestAPIData
     ```
 4. Install below dependencies using pipenv:
     ```sh
     pipenv install
     ```
+        (Optional) If you find error about python not found, add python path to pipenv by replacing 'to/the/path/of/installed/' with the location where python was installed (example: C:\Users\UserName\AppData\Local\Programs\Python\Python311\python.exe):
+
+        ```sh
+        pipenv --python to/the/path/of/installed/python.exe
+        ```
 
 5. Start Virtual Enviornment:
     ```sh
     pipenv shell
     ```
-6. Make sure to have empty Auth.txt in "C:\BP" folder
+6. Make sure to have empty Auth.txt in "C:\BP" folder. If not, create one.
 
 7. Run the web application
     ```sh
-    streamlit run ./Devkit.py
+    streamlit run ./DataPanel.py
     ```
-
+## Detailed setup instruction
 ### Python requirements
 In order to utilize this starter program, some conditions need to be satisfied:
 - Python version 3.8 or higher is installed on the computer
@@ -63,7 +74,7 @@ Make sure all listed conditions are satisfied. Start by downloading "DataPanel.p
 - Substitute "ip_address" with the Server PC IP address.
 - Change "api_version" to the REST API version of BPWin. As for this current document, the BPWin REST API version is "1.2".
 - Save the file in an accessible directory on your PC. For example, if the "DataPanel.py" is saved to "C:\", the full file path should be "C:\DataPanel.py".
-- Open a cmd line prompt, type the command: ```streamlit run C:\Devkit.py```
+- Open a cmd line prompt, type the command: ```streamlit run C:\DataPanel.py```
 - The command window will show the url ```http://localhost:8501```. Normally your default browser will automatically open to show the real-time data panel. If that doesn’t happen, you can copy the url and paste it to your browser to view the panel.
 
 ## Authentication Process
