@@ -9,6 +9,7 @@ streamlit = "*"
 pandas = "*"
 numpy = "*"
 plotly = "*"
+pyinstaller = "*"
 
 [dev-packages]
 
